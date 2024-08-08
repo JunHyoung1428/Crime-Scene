@@ -49,3 +49,20 @@
 
     - 챕터내에서 얻을 수 있는 정보들을 기반으로 문제를 풀이하는 곳 입니다.
     - 문제에 맞는 답을 입력하고 제출하면 자동으로 체점하여 결과를 메기고, 다음 챕터의 해금 여부를 결정합니다.
+
+<br/> 
+
+## 🧻 My Role
+
+  - IInteractable 을 상속하는 [상호] [작용] 가능한 [오브젝트]들
+  - 마우스 포인트 이벤트로 그림을 그릴 수 있는 [화이트 보드]
+  - [스크린샷 촬영] 및 저장, [앨범 기능]
+
+[상호]: https://github.com/JunHyoung1428/Crime-Scene/blob/main/Assets/Park/_Scripts/RotatableObject.cs
+[작용]: https://github.com/JunHyoung1428/Crime-Scene/blob/main/Assets/Park/_Scripts/ReadableObject.cs
+[오브젝트]:https://github.com/JunHyoung1428/Crime-Scene/blob/main/Assets/Park/_Scripts/InteractableObject.cs
+
+[화이트 보드]:https://github.com/JunHyoung1428/Crime-Scene/blob/main/Assets/Park/_Scripts/EnhancedWhiteBoard.cs
+
+[스크린샷 촬영]:https://github.com/JunHyoung1428/Crime-Scene/blob/main/Assets/Park/_Scripts/ScreenshotFeature/ScreenshotSystem.cs
+[앨범 기능]:https://github.com/JunHyoung1428/Crime-Scene/tree/main/Assets/Park/_Scripts/ScreenshotFeature/AlbumUI
