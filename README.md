@@ -14,6 +14,12 @@
 - 사용 툴 : Unity(2023.2.15), Visual Studio 2022, Github, Jira
 
 <br/> <br/> 
+## 🧻 My Role
+
+  - IInteractable 을 상속하는 [상호] [작용] 가능한 [오브젝트]들
+  - 마우스 포인트 이벤트로 그림을 그릴 수 있는 [화이트 보드]
+  - [스크린샷 촬영] 및 저장, [앨범 기능]
+<br/> <br/> 
 
 ## ✨ 구현 컨텐츠
 
@@ -52,11 +58,7 @@
 
 <br/> 
 
-## 🧻 My Role
 
-  - IInteractable 을 상속하는 [상호] [작용] 가능한 [오브젝트]들
-  - 마우스 포인트 이벤트로 그림을 그릴 수 있는 [화이트 보드]
-  - [스크린샷 촬영] 및 저장, [앨범 기능]
 
 [상호]: https://github.com/JunHyoung1428/Crime-Scene/blob/main/Assets/Park/_Scripts/RotatableObject.cs
 [작용]: https://github.com/JunHyoung1428/Crime-Scene/blob/main/Assets/Park/_Scripts/ReadableObject.cs
