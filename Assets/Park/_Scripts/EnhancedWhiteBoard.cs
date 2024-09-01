@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 
 public class EnhancedWhiteBoard : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler, IInteractable
 {
-    //¼±À» ±×¸± ¶§ ¸¶´Ù »õ·Î¿î LineRender °´Ã¼¸¦ »ı¼ºÇÏ´Â ¹öÀü
+    //ì„ ì„ ê·¸ë¦´ ë•Œ ë§ˆë‹¤ ìƒˆë¡œìš´ LineRender ê°ì²´ë¥¼ ìƒì„±í•˜ëŠ” ë²„ì „
 
-    // ÀåÁ¡ : ¼±À» °³º°·Î °ü¸®ÇÏ±â ¿ëÀÌÇÔ. ³ªÁß¿¡ »çÁø °´Ã¼¸¦ º¸µå¿¡ Ãß°¡ÇÒ¶§ SortingLayer ¼³Á¤À» µû·Î ÇØÁÙ ¼ö ÀÖÀ½
-    // ´ÜÁ¡ : Save&Load ½Ã ºÎÇÏ°¡ Å­
+    // ì¥ì  : ì„ ì„ ê°œë³„ë¡œ ê´€ë¦¬í•˜ê¸° ìš©ì´í•¨. ë‚˜ì¤‘ì— ì‚¬ì§„ ê°ì²´ë¥¼ ë³´ë“œì— ì¶”ê°€í• ë•Œ SortingLayer ì„¤ì •ì„ ë”°ë¡œ í•´ì¤„ ìˆ˜ ìˆìŒ
+    // ë‹¨ì  : Save&Load ì‹œ ë¶€í•˜ê°€ í¼
     [SerializeField] CinemachineVirtualCamera vCam;
     [SerializeField] LineRenderer linePrefab;
     [SerializeField] WhiteBoardUI whiteBoardUI;
@@ -20,7 +20,7 @@ public class EnhancedWhiteBoard : MonoBehaviour, IPointerDownHandler, IPointerUp
     PhysicsRaycaster raycaster;
     [SerializeField] GameObject overUICam;
 
-    private List<LineRenderer> lines = new List<LineRenderer>();
+    private Stack<LineRenderer> lines = new Stack<LineRenderer>();
     private LineRenderer curLine;
 
     private bool isDrawing;
@@ -35,7 +35,7 @@ public class EnhancedWhiteBoard : MonoBehaviour, IPointerDownHandler, IPointerUp
 
     public void AddLine( LineRenderer line )
     {
-        lines.Add(line);
+        lines.Push(line);
     }
 
     void OnDisable()
@@ -59,7 +59,7 @@ public class EnhancedWhiteBoard : MonoBehaviour, IPointerDownHandler, IPointerUp
         curLine = Instantiate(linePrefab, transform);
         curLine.startColor = color;
         curLine.endColor = color;
-        lines.Add(curLine);
+        lines.Push(curLine);
 
         Vector3 [] positions = new Vector3 [1];
         positions [0] = downPos;
@@ -135,7 +135,7 @@ public class EnhancedWhiteBoard : MonoBehaviour, IPointerDownHandler, IPointerUp
         isEdit = false;
         overUICam.SetActive(isEdit);
         raycaster.eventMask = drawMask;
-        //¸Å°³º¯¼ö°¡ EnumÀÌ¸é OnClick¿¡ µî·Ï ºÒ°¡...
+        //ë§¤ê°œë³€ìˆ˜ê°€ Enumì´ë©´ OnClickì— ë“±ë¡ ë¶ˆê°€...
         Color newColor = new Color();
         // 0 = black, 1 = red, 2 = blue
         switch ( color )
@@ -153,24 +153,22 @@ public class EnhancedWhiteBoard : MonoBehaviour, IPointerDownHandler, IPointerUp
         SetColor(newColor);
     }
 
-    //¸ğµç ¼±À» Áö¿ò
+    //ëª¨ë“  ì„ ì„ ì§€ì›€
     public void EraseAll()
     {
-        for ( int i = 0; i < lines.Count; i++ )
+         while (lines.Count > 0)
         {
-            Destroy(lines [i].gameObject);
+            Destroy(lines.Pop().gameObject);
         }
-        lines.Clear();
     }
 
-    //ÀÌÀü¿¡ ±×¾ú´ø ¼±À» Áö¿ò
+    //ì´ì „ì— ê·¸ì—ˆë˜ ì„ ì„ ì§€ì›€
     public void Undo()
     {
         if ( lines.Count <= 0 )
             return;
 
-        Destroy(lines [lines.Count - 1].gameObject);
-        lines.RemoveAt(lines.Count - 1);
+        Destroy(lines.Pop().gameObject);
     }
 
     public void Edit()
