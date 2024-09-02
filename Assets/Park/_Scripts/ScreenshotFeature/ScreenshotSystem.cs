@@ -20,7 +20,6 @@ public class ScreenshotSystem : MonoBehaviour
 
     [SerializeField, Range(20, 100)] int maxCapacity; //최대 이미지 갯수
     [SerializeField] ScreenshotAlbumUI albumUI;
-    [SerializeField] MiniAlbumUI miniAlbumUI;
     [SerializeField] PopUpUI ViewFinder;
     [SerializeField] AudioClip sfx;
 
@@ -58,8 +57,7 @@ public class ScreenshotSystem : MonoBehaviour
     private void Start()
     {
         ScreenshotAlbum.Instance.InitAlbum(FolderPath);
-        albumUI = FindAnyObjectByType<ScreenshotAlbumUI>();
-        miniAlbumUI = FindAnyObjectByType<MiniAlbumUI>();
+        albumUI = FindAnyObjectByType<ScreenshotAlbumUI> ();
     }
 
     // 카메라가 랜더링 마친 이후임을 보장하기 위해 OnPostRender()에서 호출
@@ -82,9 +80,7 @@ public class ScreenshotSystem : MonoBehaviour
     {
         string totalPath = TotalPath; // 프로퍼티 참조 시 시간에 따라 이름이 결정되므로 캐싱
 
-        ScriptableObject.CreateInstance<ScreenshotData>();
-        //List에 사진 객체 추가
-        ScreenshotAlbum.Instance.Add(new Screenshot(Extension.CreateScreenshotData(totalPath)));
+       
 
         Texture2D screenTex = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         Rect area = new Rect(0f, 0f, Screen.width, Screen.height);
@@ -110,22 +106,15 @@ public class ScreenshotSystem : MonoBehaviour
         }
         Destroy(screenTex); //가비지 제거 
 
+        ScriptableObject.CreateInstance<ScreenshotData>();
+        //List에 사진 객체 추가
+        ScreenshotAlbum.Instance.Add(new Screenshot(Extension.CreateScreenshotData(totalPath)));
+
         if ( succeeded )
         {
             Debug.Log($"Screenshot Saved : {totalPath}");
             StartCoroutine(ScreenshotAnimation());
             lastSavedPath = totalPath; // 최근 경로에 저장
-
-            if ( albumUI.IsInit() )
-            {
-                albumUI.UpdateAlbumUISlots();
-                miniAlbumUI.UpdateAlbumUISlots();
-            }
-            else
-            {
-                albumUI.InitAlbumUISlots();
-                miniAlbumUI.InitAlbumUISlots();
-            }
         }
     }
 

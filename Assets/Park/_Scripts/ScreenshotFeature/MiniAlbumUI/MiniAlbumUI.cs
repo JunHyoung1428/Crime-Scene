@@ -30,6 +30,8 @@ public class MiniAlbumUI : MonoBehaviour
     {
         album = ScreenshotAlbum.Instance;
         album.OnScreenshotDeleted += OnScreenshotDeleted;
+        album.OnScreenshotAdd += UpdateAlbumUISlots;
+        InitAlbumUISlots();
     }
 
 
@@ -53,7 +55,7 @@ public class MiniAlbumUI : MonoBehaviour
         isInit = true;
     }
 
-    public void UpdateAlbumUISlots()
+    public void UpdateAlbumUISlots(Screenshot screenshot)
     {
         int count = ScreenshotAlbum.Instance.Screenshots.Count;
         MiniSlotUI slot = Instantiate(ScreenshotSlotUIPrefab);

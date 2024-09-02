@@ -37,9 +37,12 @@ public class ScreenshotAlbum : MonoBehaviour
         }
     }
 
+    public Action<Screenshot> OnScreenshotAdd;
+
     public void Add( Screenshot screenshot )
     {
         Screenshots.Add(screenshot);
+        OnScreenshotAdd?.Invoke(screenshot);
     }
 
     public event Action<Screenshot> OnScreenshotDeleted;

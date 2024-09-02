@@ -30,7 +30,8 @@ public class ScreenshotAlbumUI : PopUpUI
         base.Awake();
         screenshotSlots = new List<ScreenshotSlotUI>();
         GetUI<Button>("BTN_Look").onClick.AddListener(ButtonLook);
-        //InitAlbumUISlots();
+        ScreenshotAlbum.Instance.OnScreenshotAdd += UpdateAlbumUISlots;
+        InitAlbumUISlots();
     }
 
 
@@ -56,7 +57,7 @@ public class ScreenshotAlbumUI : PopUpUI
         isInit = true;
     }
 
-    public void UpdateAlbumUISlots()
+    public void UpdateAlbumUISlots(Screenshot screenshot)
     {
         Debug.Log("Album Slot Update");
         int count = ScreenshotAlbum.Instance.Screenshots.Count;
