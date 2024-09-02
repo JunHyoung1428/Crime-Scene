@@ -116,16 +116,17 @@ public class DataManager : Singleton<DataManager>
         for ( int i = 0; i < GameData.tutorialData.PlayerMultiAnswer.Count; i++ )
             PlayerMultiAnswer [i].GetComponentInParent<TMP_Dropdown>().value = GameData.tutorialData.PlayerMultiAnswer [i];
     }
-    public void SaveLines( List<LineRenderer> lines )
+    public void SaveLines( Stack<LineRenderer> lines )
     {
         GameData.tutorialData.lineDatas.Clear();
-        for ( int i = 0; i < lines.Count; i++ )
+        while (lines.Count > 0)
         {
             LineData data = new LineData();
-            data.color = lines [i].startColor;
-            data.count = lines [i].positionCount;
+            LineRenderer lineRenderer = lines.Pop();
+            data.color = lineRenderer.startColor;
+            data.count = lineRenderer.positionCount;
             data.pos = new Vector3 [data.count];
-            lines [i].GetPositions(data.pos);
+            lineRenderer.GetPositions(data.pos);
             GameData.tutorialData.lineDatas.Add(data);
         }
         SaveData(0);
